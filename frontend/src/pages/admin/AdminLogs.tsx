@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Activity, User, Calendar, Filter } from 'lucide-react';
-import { adminAPI, ActivityLog } from '../api';
+import { adminAPI, ActivityLog } from '@/api';
 
 const AdminLogs = () => {
   const [logs, setLogs] = useState<ActivityLog[]>([]);
