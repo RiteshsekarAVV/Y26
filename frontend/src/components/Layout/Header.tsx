@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LogOut, User, Settings, Bell, ChevronDown } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -73,7 +73,7 @@ const Header = () => {
                 onClick={() => setShowDropdown(!showDropdown)}
                 className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors"
               >
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                   <User className="w-4 h-4 text-white" />
                 </div>
                 <div className="text-left">

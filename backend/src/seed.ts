@@ -14,7 +14,7 @@ async function main() {
     update: {},
     create: {
       email: 'admin@yugam.com',
-      name: 'System Administrator',
+      name: 'Admin',
       password: adminPassword,
       role: UserRole.ADMIN,
       isActive: true
