@@ -10,7 +10,8 @@ import {
   Settings, 
   FileText,
   BarChart3,
-  Shield
+  Shield,
+  Building
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -80,10 +81,17 @@ const Sidebar = () => {
   const menuItems = getMenuItems();
 
   return (
-    <div className="w-64 bg-white shadow-lg min-h-screen">
-      <div className="p-6">
-        <h1 className="text-2xl font-bold text-gray-800">Yugam Finance</h1>
-        <p className="text-sm text-gray-600 mt-1">Financial Management Portal</p>
+    <div className="w-64 bg-white shadow-lg min-h-screen border-r border-gray-200">
+      <div className="p-6 border-b border-gray-200">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <Building className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">Yugam Finance</h1>
+            <p className="text-xs text-gray-500">Financial Management Portal</p>
+          </div>
+        </div>
       </div>
       
       <nav className="mt-6">
@@ -93,9 +101,9 @@ const Sidebar = () => {
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center px-4 py-3 mb-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
+                `flex items-center px-4 py-3 mb-1 text-sm font-medium rounded-lg transition-all duration-200 ${
                   isActive
-                    ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-500'
+                    ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-500 shadow-sm'
                     : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
                 }`
               }
@@ -106,6 +114,14 @@ const Sidebar = () => {
           ))}
         </div>
       </nav>
+
+      {/* Footer */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50">
+        <div className="text-center">
+          <p className="text-xs text-gray-500">Yugam 2025</p>
+          <p className="text-xs text-gray-400">Kumaraguru Institutions</p>
+        </div>
+      </div>
     </div>
   );
 };

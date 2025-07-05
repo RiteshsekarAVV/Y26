@@ -39,68 +39,153 @@ export const emailTemplates = {
   userWelcome: (name: string, email: string, tempPassword: string) => ({
     subject: 'Welcome to Yugam Finance Portal',
     html: `
-      <h2>Welcome to Yugam Finance Portal</h2>
-      <p>Dear ${name},</p>
-      <p>Your account has been created successfully. Here are your login credentials:</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Temporary Password:</strong> ${tempPassword}</p>
-      <p>Please login and change your password immediately.</p>
-      <p>Best regards,<br>Yugam Finance Team</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
+        <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          <h2 style="color: #1e40af; margin-bottom: 20px;">Welcome to Yugam Finance Portal</h2>
+          <p style="color: #374151; margin-bottom: 15px;">Dear ${name},</p>
+          <p style="color: #374151; margin-bottom: 15px;">Your account has been created successfully for the Yugam Finance Portal. Here are your login credentials:</p>
+          
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 6px; margin: 20px 0;">
+            <p style="margin: 5px 0; color: #374151;"><strong>Email:</strong> ${email}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Password:</strong> ${tempPassword}</p>
+          </div>
+          
+          <p style="color: #dc2626; margin-bottom: 15px;"><strong>Important:</strong> Please login and change your password immediately for security purposes.</p>
+          
+          <div style="margin: 30px 0;">
+            <a href="${process.env.FRONTEND_URL}/login" style="background-color: #1e40af; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Login to Portal</a>
+          </div>
+          
+          <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
+            Best regards,<br>
+            Yugam Finance Team<br>
+            Kumaraguru Institutions
+          </p>
+        </div>
+      </div>
     `,
   }),
 
   eventCreated: (eventName: string, creatorName: string, coordinatorName: string) => ({
     subject: `New Event Created: ${eventName}`,
     html: `
-      <h2>New Event Created</h2>
-      <p>Dear ${coordinatorName},</p>
-      <p>A new event has been created and assigned to you:</p>
-      <p><strong>Event Name:</strong> ${eventName}</p>
-      <p><strong>Created by:</strong> ${creatorName}</p>
-      <p>Please login to the portal to view details and manage the event.</p>
-      <p>Best regards,<br>Yugam Finance Team</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
+        <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          <h2 style="color: #059669; margin-bottom: 20px;">New Event Created</h2>
+          <p style="color: #374151; margin-bottom: 15px;">Dear ${coordinatorName},</p>
+          <p style="color: #374151; margin-bottom: 15px;">A new event has been created and assigned to you:</p>
+          
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 6px; margin: 20px 0;">
+            <p style="margin: 5px 0; color: #374151;"><strong>Event Name:</strong> ${eventName}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Created by:</strong> ${creatorName}</p>
+          </div>
+          
+          <p style="color: #374151; margin-bottom: 15px;">Please login to the portal to view details and manage the event.</p>
+          
+          <div style="margin: 30px 0;">
+            <a href="${process.env.FRONTEND_URL}/events" style="background-color: #059669; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">View Event</a>
+          </div>
+          
+          <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
+            Best regards,<br>
+            Yugam Finance Team<br>
+            Kumaraguru Institutions
+          </p>
+        </div>
+      </div>
     `,
   }),
 
   budgetSubmitted: (eventName: string, teamLeadName: string) => ({
     subject: `Budget Submitted for Review: ${eventName}`,
     html: `
-      <h2>Budget Submitted for Review</h2>
-      <p>Dear Finance Team,</p>
-      <p>A budget has been submitted for review:</p>
-      <p><strong>Event Name:</strong> ${eventName}</p>
-      <p><strong>Submitted by:</strong> ${teamLeadName}</p>
-      <p>Please login to the portal to review and approve the budget.</p>
-      <p>Best regards,<br>Yugam Finance Portal</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
+        <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          <h2 style="color: #d97706; margin-bottom: 20px;">Budget Submitted for Review</h2>
+          <p style="color: #374151; margin-bottom: 15px;">Dear Finance Team,</p>
+          <p style="color: #374151; margin-bottom: 15px;">A budget has been submitted for review:</p>
+          
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 6px; margin: 20px 0;">
+            <p style="margin: 5px 0; color: #374151;"><strong>Event Name:</strong> ${eventName}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Submitted by:</strong> ${teamLeadName}</p>
+          </div>
+          
+          <p style="color: #374151; margin-bottom: 15px;">Please login to the portal to review and approve the budget.</p>
+          
+          <div style="margin: 30px 0;">
+            <a href="${process.env.FRONTEND_URL}/budgets" style="background-color: #d97706; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Review Budget</a>
+          </div>
+          
+          <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
+            Best regards,<br>
+            Yugam Finance Portal<br>
+            Kumaraguru Institutions
+          </p>
+        </div>
+      </div>
     `,
   }),
 
   budgetApproved: (eventName: string, status: string, remarks: string) => ({
     subject: `Budget ${status}: ${eventName}`,
     html: `
-      <h2>Budget ${status}</h2>
-      <p>Dear Team,</p>
-      <p>The budget for your event has been ${status.toLowerCase()}:</p>
-      <p><strong>Event Name:</strong> ${eventName}</p>
-      <p><strong>Status:</strong> ${status}</p>
-      <p><strong>Remarks:</strong> ${remarks}</p>
-      <p>Please login to the portal to view the details.</p>
-      <p>Best regards,<br>Yugam Finance Team</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
+        <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          <h2 style="color: ${status === 'APPROVED' ? '#059669' : '#dc2626'}; margin-bottom: 20px;">Budget ${status}</h2>
+          <p style="color: #374151; margin-bottom: 15px;">Dear Team,</p>
+          <p style="color: #374151; margin-bottom: 15px;">The budget for your event has been ${status.toLowerCase()}:</p>
+          
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 6px; margin: 20px 0;">
+            <p style="margin: 5px 0; color: #374151;"><strong>Event Name:</strong> ${eventName}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Status:</strong> ${status}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Remarks:</strong> ${remarks}</p>
+          </div>
+          
+          <p style="color: #374151; margin-bottom: 15px;">Please login to the portal to view the details.</p>
+          
+          <div style="margin: 30px 0;">
+            <a href="${process.env.FRONTEND_URL}/events" style="background-color: ${status === 'APPROVED' ? '#059669' : '#dc2626'}; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">View Event</a>
+          </div>
+          
+          <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
+            Best regards,<br>
+            Yugam Finance Team<br>
+            Kumaraguru Institutions
+          </p>
+        </div>
+      </div>
     `,
   }),
 
   expenseAdded: (eventName: string, itemName: string, amount: number, addedBy: string) => ({
     subject: `New Expense Added: ${eventName}`,
     html: `
-      <h2>New Expense Added</h2>
-      <p>Dear Event Coordinator,</p>
-      <p>A new expense has been added to your event:</p>
-      <p><strong>Event Name:</strong> ${eventName}</p>
-      <p><strong>Item:</strong> ${itemName}</p>
-      <p><strong>Amount:</strong> ₹${amount}</p>
-      <p><strong>Added by:</strong> ${addedBy}</p>
-      <p>Please login to the portal to view the updated budget status.</p>
-      <p>Best regards,<br>Yugam Finance Team</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
+        <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          <h2 style="color: #7c3aed; margin-bottom: 20px;">New Expense Added</h2>
+          <p style="color: #374151; margin-bottom: 15px;">Dear Event Coordinator,</p>
+          <p style="color: #374151; margin-bottom: 15px;">A new expense has been added to your event:</p>
+          
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 6px; margin: 20px 0;">
+            <p style="margin: 5px 0; color: #374151;"><strong>Event Name:</strong> ${eventName}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Item:</strong> ${itemName}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Amount:</strong> ₹${amount.toLocaleString()}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Added by:</strong> ${addedBy}</p>
+          </div>
+          
+          <p style="color: #374151; margin-bottom: 15px;">Please login to the portal to view the updated budget status.</p>
+          
+          <div style="margin: 30px 0;">
+            <a href="${process.env.FRONTEND_URL}/events" style="background-color: #7c3aed; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">View Event</a>
+          </div>
+          
+          <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
+            Best regards,<br>
+            Yugam Finance Team<br>
+            Kumaraguru Institutions
+          </p>
+        </div>
+      </div>
     `,
   }),
 };

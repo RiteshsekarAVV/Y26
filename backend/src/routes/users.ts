@@ -4,7 +4,6 @@ import { body, validationResult } from 'express-validator';
 import { PrismaClient, UserRole } from '@prisma/client';
 import { authenticate, authorize } from '../middleware/auth';
 import { sendEmail, emailTemplates } from '../utils/email';
-import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -54,8 +53,9 @@ router.post('/', authenticate, authorize([UserRole.ADMIN]), [
       return res.status(400).json({ error: 'User already exists with this email' });
     }
 
-    // Generate temporary password
-    const tempPassword = uuidv4().substring(0, 8);
+    // Generate password in format: Iam<NAME>123!@#
+    const cleanName = name.replace(/\s+/g, '');
+    const tempPassword = `Iam${cleanName}123!@#`;
     const hashedPassword = await bcrypt.hash(tempPassword, 12);
 
     const user = await prisma.user.create({
