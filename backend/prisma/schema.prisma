@@ -64,6 +64,7 @@ model BudgetCategory {
   // Relations
   budgets     Budget[]
   expenses    Expense[]
+  products    ProductCatalog[]
 
   @@map("budget_categories")
 }
