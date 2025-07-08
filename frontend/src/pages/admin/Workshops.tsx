@@ -43,9 +43,9 @@ const AdminWorkshops = () => {
 
   const downloadTemplate = () => {
     const csvContent = "data:text/csv;charset=utf-8," + 
-      "Title,Type,Description,CoordinatorEmail,Venue,DateTime\n" +
-      "Sample Workshop,WORKSHOP,Sample Description,coordinator@yugam.in,Lab 1,2024-12-25T10:00:00\n" +
-      "AI Workshop,WORKSHOP,Artificial Intelligence workshop,ai@yugam.in,Computer Lab,2024-12-26T09:00:00";
+      "Title,Type,Description,CoordinatorEmail,DateTime\n" +
+      "Sample Workshop,WORKSHOP,Sample Description,coordinator@yugam.in,2024-12-25T10:00:00\n" +
+      "AI Workshop,WORKSHOP,Artificial Intelligence workshop,ai@yugam.in,2024-12-26T09:00:00";
     
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");

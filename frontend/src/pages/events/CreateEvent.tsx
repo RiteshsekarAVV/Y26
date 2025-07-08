@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, Save } from 'lucide-react';
-import { eventsAPI, usersAPI, categoriesAPI, CreateEventRequest, User, BudgetCategory } from '@/api';
+import { ArrowLeft, Calendar, Save, Plus } from 'lucide-react';
+import { eventsAPI, usersAPI, categoriesAPI, budgetsAPI, CreateEventRequest, User, BudgetCategory } from '@/api';
 import { useApi } from '@/hooks/useApi';
 import { useToast } from '@/components/ui/Toast';
 
@@ -14,18 +14,29 @@ const CreateEvent = () => {
     type: 'EVENT',
     coordinatorEmail: '',
     description: '',
-    venue: '',
     dateTime: ''
   });
 
   const [budgets, setBudgets] = useState<{ categoryId: string; amount: number; sponsorAmount: number; remarks: string }[]>([]);
   const [coordinators, setCoordinators] = useState<User[]>([]);
   const [categories, setCategories] = useState<BudgetCategory[]>([]);
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [categoryFormData, setCategoryFormData] = useState({
+    name: '',
+    description: '',
+    order: 0
+  });
 
   const { execute: createEvent, loading: creating } = useApi(eventsAPI.create, {
     showSuccessToast: false,
     showErrorToast: true,
     errorMessage: 'Failed to create event'
+  });
+
+  const { execute: createBudgets } = useApi(budgetsAPI.createOrUpdate, {
+    showSuccessToast: false,
+    showErrorToast: true,
+    errorMessage: 'Failed to create budgets'
   });
 
   const { execute: fetchUsers } = useApi(usersAPI.getAll, {
@@ -40,32 +51,40 @@ const CreateEvent = () => {
     errorMessage: 'Failed to fetch categories'
   });
 
+  const { execute: createCategory, loading: creatingCategory } = useApi(categoriesAPI.create, {
+    showSuccessToast: false,
+    showErrorToast: true,
+    errorMessage: 'Failed to create category'
+  });
+
   useEffect(() => {
-    const loadData = async () => {
-      const [users, categoriesData] = await Promise.all([
-        fetchUsers(),
-        fetchCategories()
-      ]);
-
-      if (users) {
-        const eventCoordinators = users.filter(user => user.role === 'EVENT_COORDINATOR');
-        setCoordinators(eventCoordinators);
-      }
-
-      if (categoriesData) {
-        setCategories(categoriesData);
-        // Initialize budget entries for each category
-        setBudgets(categoriesData.map(category => ({
-          categoryId: category.id,
-          amount: 0,
-          sponsorAmount: 0,
-          remarks: ''
-        })));
-      }
-    };
-
     loadData();
   }, []);
+
+  const loadData = async () => {
+    const [users, categoriesData] = await Promise.all([
+      fetchUsers(),
+      fetchCategories()
+    ]);
+
+    if (users) {
+      const eventCoordinators = users.filter(user => 
+        user.role === 'EVENT_COORDINATOR' || user.role === 'WORKSHOP_COORDINATOR'
+      );
+      setCoordinators(eventCoordinators);
+    }
+
+    if (categoriesData) {
+      setCategories(categoriesData);
+      // Initialize budget entries for each category
+      setBudgets(categoriesData.map(category => ({
+        categoryId: category.id,
+        amount: 0,
+        sponsorAmount: 0,
+        remarks: ''
+      })));
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,6 +97,12 @@ const CreateEvent = () => {
 
     const result = await createEvent(eventData);
     if (result) {
+      // Create budgets if any amounts are specified
+      const validBudgets = budgets.filter(budget => budget.amount > 0);
+      if (validBudgets.length > 0) {
+        await createBudgets(result.id, { budgets: validBudgets });
+      }
+      
       showSuccess('Event created successfully', 'Your event has been created and is pending approval.');
       navigate('/events');
     }
@@ -97,6 +122,29 @@ const CreateEvent = () => {
         ? { ...budget, [field]: field === 'remarks' ? value : parseFloat(value) || 0 }
         : budget
     ));
+  };
+
+  const handleCategorySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const result = await createCategory(categoryFormData);
+    if (result) {
+      showSuccess('Category created successfully');
+      setShowCategoryModal(false);
+      setCategoryFormData({ name: '', description: '', order: 0 });
+      // Refresh categories
+      const categoriesData = await fetchCategories();
+      if (categoriesData) {
+        setCategories(categoriesData);
+        // Add new category to budgets
+        setBudgets(prev => [...prev, {
+          categoryId: result.id,
+          amount: 0,
+          sponsorAmount: 0,
+          remarks: ''
+        }]);
+      }
+    }
   };
 
   const getTotalBudget = () => {
@@ -184,21 +232,6 @@ const CreateEvent = () => {
               </div>
 
               <div>
-                <label htmlFor="venue" className="block text-sm font-medium text-gray-700">
-                  Venue
-                </label>
-                <input
-                  type="text"
-                  name="venue"
-                  id="venue"
-                  value={formData.venue}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="Enter venue"
-                />
-              </div>
-
-              <div className="md:col-span-2">
                 <label htmlFor="dateTime" className="block text-sm font-medium text-gray-700">
                   Date & Time
                 </label>
@@ -231,7 +264,17 @@ const CreateEvent = () => {
 
           {/* Budget Planning */}
           <div className="border-b border-gray-200 pb-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Budget Planning</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-medium text-gray-900">Budget Planning</h3>
+              <button
+                type="button"
+                onClick={() => setShowCategoryModal(true)}
+                className="inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Category
+              </button>
+            </div>
             <div className="space-y-4">
               {categories.map((category) => {
                 const budget = budgets.find(b => b.categoryId === category.id);
@@ -325,6 +368,71 @@ const CreateEvent = () => {
           </div>
         </form>
       </div>
+
+      {/* Category Modal */}
+      {showCategoryModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div className="mt-3">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Add New Category</h3>
+              
+              <form onSubmit={handleCategorySubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={categoryFormData.name}
+                    onChange={(e) => setCategoryFormData(prev => ({ ...prev, name: e.target.value }))}
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    placeholder="Enter category name"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Description</label>
+                  <textarea
+                    value={categoryFormData.description}
+                    onChange={(e) => setCategoryFormData(prev => ({ ...prev, description: e.target.value }))}
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    rows={3}
+                    placeholder="Enter category description"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Display Order</label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={categoryFormData.order}
+                    onChange={(e) => setCategoryFormData(prev => ({ ...prev, order: parseInt(e.target.value) || 0 }))}
+                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    placeholder="Enter display order"
+                  />
+                </div>
+                
+                <div className="flex justify-end space-x-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowCategoryModal(false)}
+                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={creatingCategory}
+                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 disabled:opacity-50"
+                  >
+                    {creatingCategory ? 'Creating...' : 'Create Category'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

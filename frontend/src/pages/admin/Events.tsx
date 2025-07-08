@@ -43,9 +43,9 @@ const AdminEvents = () => {
 
   const downloadTemplate = () => {
     const csvContent = "data:text/csv;charset=utf-8," + 
-      "Title,Type,Description,CoordinatorEmail,Venue,DateTime\n" +
-      "Sample Event,EVENT,Sample Description,coordinator@yugam.in,Main Hall,2024-12-25T10:00:00\n" +
-      "Tech Fest,EVENT,Technology festival,tech@yugam.in,Auditorium,2024-12-26T09:00:00";
+      "Title,Type,Description,CoordinatorEmail,DateTime\n" +
+      "Sample Event,EVENT,Sample Description,coordinator@yugam.in,2024-12-25T10:00:00\n" +
+      "Tech Fest,EVENT,Technology festival,tech@yugam.in,2024-12-26T09:00:00";
     
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
