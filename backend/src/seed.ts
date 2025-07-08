@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Seeding database...');
 
-  // Create admin user with the specified password format
+  // Create admin user with the specified email
   const adminPassword = await bcrypt.hash('IamAdmin123!@#', 12);
   
   const admin = await prisma.user.upsert({
@@ -40,8 +40,42 @@ async function main() {
     });
   }
 
+  // Create default venues
+  const venues = [
+    {
+      name: 'Main Auditorium',
+      description: 'Large auditorium for major events',
+      capacity: 500,
+      location: 'Main Block',
+      facilities: 'AC, Projector, Sound System, Stage'
+    },
+    {
+      name: 'Conference Hall A',
+      description: 'Medium-sized conference hall',
+      capacity: 100,
+      location: 'Admin Block',
+      facilities: 'AC, Projector, WiFi'
+    },
+    {
+      name: 'Workshop Lab 1',
+      description: 'Technical workshop laboratory',
+      capacity: 50,
+      location: 'Engineering Block',
+      facilities: 'Computers, Projector, Whiteboard'
+    }
+  ];
+
+  for (const venue of venues) {
+    await prisma.venue.upsert({
+      where: { name: venue.name },
+      update: {},
+      create: venue
+    });
+  }
+
   console.log('Admin user created:', admin.email);
   console.log('Default budget categories created');
+  console.log('Default venues created');
   console.log('Seeding completed successfully!');
 }
 

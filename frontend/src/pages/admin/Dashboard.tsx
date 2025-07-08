@@ -61,12 +61,12 @@ const AdminDashboard = () => {
           </div>
         </div>
         
-        <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4">
+        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
           <div className="flex items-center">
-            <AlertTriangle className="h-5 w-5 text-red-600 mr-2" />
-            <span className="text-red-800 font-medium">Administrator Access</span>
+            <AlertTriangle className="h-5 w-5 text-blue-600 mr-2" />
+            <span className="text-blue-800 font-medium">Administrator Access</span>
           </div>
-          <p className="text-red-700 text-sm mt-1">
+          <p className="text-blue-700 text-sm mt-1">
             You have full system access. Use these privileges responsibly.
           </p>
         </div>
@@ -93,8 +93,8 @@ const AdminDashboard = () => {
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                  <Calendar className="h-6 w-6 text-green-600" />
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <Calendar className="h-6 w-6 text-blue-600" />
                 </div>
               </div>
               <div className="ml-4">
@@ -108,8 +108,8 @@ const AdminDashboard = () => {
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                  <Clock className="h-6 w-6 text-yellow-600" />
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <Clock className="h-6 w-6 text-blue-600" />
                 </div>
               </div>
               <div className="ml-4">
@@ -123,8 +123,8 @@ const AdminDashboard = () => {
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                  <CheckCircle className="h-6 w-6 text-green-600" />
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <CheckCircle className="h-6 w-6 text-blue-600" />
                 </div>
               </div>
               <div className="ml-4">
@@ -153,8 +153,8 @@ const AdminDashboard = () => {
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                  <Receipt className="h-6 w-6 text-red-600" />
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <Receipt className="h-6 w-6 text-blue-600" />
                 </div>
               </div>
               <div className="ml-4">
@@ -186,40 +186,40 @@ const AdminDashboard = () => {
           
           <a
             href="/admin/categories"
-            className="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors group"
+            className="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors group"
           >
-            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
-              <Settings className="h-5 w-5 text-green-600" />
+            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+              <Settings className="h-5 w-5 text-blue-600" />
             </div>
             <div className="ml-3">
-              <span className="text-green-700 font-medium">Budget Categories</span>
-              <p className="text-green-600 text-xs">Manage categories</p>
+              <span className="text-blue-700 font-medium">Budget Categories</span>
+              <p className="text-blue-600 text-xs">Manage categories</p>
             </div>
           </a>
           
           <a
             href="/admin/products"
-            className="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors group"
+            className="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors group"
           >
-            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
-              <Receipt className="h-5 w-5 text-purple-600" />
+            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+              <Receipt className="h-5 w-5 text-blue-600" />
             </div>
             <div className="ml-3">
-              <span className="text-purple-700 font-medium">Product Catalog</span>
-              <p className="text-purple-600 text-xs">Manage products</p>
+              <span className="text-blue-700 font-medium">Product Catalog</span>
+              <p className="text-blue-600 text-xs">Manage products</p>
             </div>
           </a>
 
           <a
             href="/admin/logs"
-            className="flex items-center p-4 bg-red-50 rounded-lg hover:bg-red-100 transition-colors group"
+            className="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors group"
           >
-            <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center group-hover:bg-red-200 transition-colors">
-              <Activity className="h-5 w-5 text-red-600" />
+            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+              <Activity className="h-5 w-5 text-blue-600" />
             </div>
             <div className="ml-3">
-              <span className="text-red-700 font-medium">System Logs</span>
-              <p className="text-red-600 text-xs">View activity logs</p>
+              <span className="text-blue-700 font-medium">System Logs</span>
+              <p className="text-blue-600 text-xs">View activity logs</p>
             </div>
           </a>
         </div>
@@ -230,11 +230,11 @@ const AdminDashboard = () => {
         <h2 className="text-xl font-semibold text-gray-900 mb-6">System Health</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <TrendingUp className="h-8 w-8 text-green-600" />
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <TrendingUp className="h-8 w-8 text-blue-600" />
             </div>
             <h3 className="font-semibold text-gray-900">System Status</h3>
-            <p className="text-green-600 text-sm">All systems operational</p>
+            <p className="text-blue-600 text-sm">All systems operational</p>
           </div>
           
           <div className="text-center">
@@ -246,11 +246,11 @@ const AdminDashboard = () => {
           </div>
           
           <div className="text-center">
-            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Settings className="h-8 w-8 text-purple-600" />
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <Settings className="h-8 w-8 text-blue-600" />
             </div>
             <h3 className="font-semibold text-gray-900">Services</h3>
-            <p className="text-purple-600 text-sm">All services running</p>
+            <p className="text-blue-600 text-sm">All services running</p>
           </div>
         </div>
       </div>
