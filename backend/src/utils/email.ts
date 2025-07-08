@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import { logger } from './logger';
 
-const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransporter({
   host: process.env.EMAIL_HOST,
   port: parseInt(process.env.EMAIL_PORT || '587'),
   secure: false,
@@ -59,28 +59,28 @@ export const emailTemplates = {
           <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
             Best regards,<br>
             Yugam Finance Team<br>
-            Kumaraguru Institutions
+            Kumaraguru College of Technology
           </p>
         </div>
       </div>
     `,
   }),
 
-  eventCreated: (eventName: string, creatorName: string, coordinatorName: string) => ({
-    subject: `New Event Created: ${eventName}`,
+  eventCreated: (eventTitle: string, creatorName: string, coordinatorName: string) => ({
+    subject: `New ${eventTitle} Created - Coordinator Assignment`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
         <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          <h2 style="color: #059669; margin-bottom: 20px;">New Event Created</h2>
+          <h2 style="color: #059669; margin-bottom: 20px;">New Event/Workshop Created</h2>
           <p style="color: #374151; margin-bottom: 15px;">Dear ${coordinatorName},</p>
-          <p style="color: #374151; margin-bottom: 15px;">A new event has been created and assigned to you:</p>
+          <p style="color: #374151; margin-bottom: 15px;">You have been assigned as the coordinator for a new event/workshop:</p>
           
           <div style="background-color: #f3f4f6; padding: 20px; border-radius: 6px; margin: 20px 0;">
-            <p style="margin: 5px 0; color: #374151;"><strong>Event Name:</strong> ${eventName}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Event/Workshop:</strong> ${eventTitle}</p>
             <p style="margin: 5px 0; color: #374151;"><strong>Created by:</strong> ${creatorName}</p>
           </div>
           
-          <p style="color: #374151; margin-bottom: 15px;">Please login to the portal to view details and manage the event.</p>
+          <p style="color: #374151; margin-bottom: 15px;">Please login to the portal to view details and track the event progress.</p>
           
           <div style="margin: 30px 0;">
             <a href="${process.env.FRONTEND_URL}/events" style="background-color: #059669; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">View Event</a>
@@ -89,15 +89,15 @@ export const emailTemplates = {
           <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
             Best regards,<br>
             Yugam Finance Team<br>
-            Kumaraguru Institutions
+            Kumaraguru College of Technology
           </p>
         </div>
       </div>
     `,
   }),
 
-  budgetSubmitted: (eventName: string, teamLeadName: string) => ({
-    subject: `Budget Submitted for Review: ${eventName}`,
+  budgetSubmitted: (eventTitle: string, teamLeadName: string) => ({
+    subject: `Budget Submitted for Review: ${eventTitle}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
         <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
@@ -106,7 +106,7 @@ export const emailTemplates = {
           <p style="color: #374151; margin-bottom: 15px;">A budget has been submitted for review:</p>
           
           <div style="background-color: #f3f4f6; padding: 20px; border-radius: 6px; margin: 20px 0;">
-            <p style="margin: 5px 0; color: #374151;"><strong>Event Name:</strong> ${eventName}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Event/Workshop:</strong> ${eventTitle}</p>
             <p style="margin: 5px 0; color: #374151;"><strong>Submitted by:</strong> ${teamLeadName}</p>
           </div>
           
@@ -119,29 +119,29 @@ export const emailTemplates = {
           <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
             Best regards,<br>
             Yugam Finance Portal<br>
-            Kumaraguru Institutions
+            Kumaraguru College of Technology
           </p>
         </div>
       </div>
     `,
   }),
 
-  budgetApproved: (eventName: string, status: string, remarks: string) => ({
-    subject: `Budget ${status}: ${eventName}`,
+  budgetApproved: (eventTitle: string, status: string, remarks: string) => ({
+    subject: `Budget ${status}: ${eventTitle}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
         <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
           <h2 style="color: ${status === 'APPROVED' ? '#059669' : '#dc2626'}; margin-bottom: 20px;">Budget ${status}</h2>
           <p style="color: #374151; margin-bottom: 15px;">Dear Team,</p>
-          <p style="color: #374151; margin-bottom: 15px;">The budget for your event has been ${status.toLowerCase()}:</p>
+          <p style="color: #374151; margin-bottom: 15px;">The budget for your event/workshop has been ${status.toLowerCase()}:</p>
           
           <div style="background-color: #f3f4f6; padding: 20px; border-radius: 6px; margin: 20px 0;">
-            <p style="margin: 5px 0; color: #374151;"><strong>Event Name:</strong> ${eventName}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Event/Workshop:</strong> ${eventTitle}</p>
             <p style="margin: 5px 0; color: #374151;"><strong>Status:</strong> ${status}</p>
             <p style="margin: 5px 0; color: #374151;"><strong>Remarks:</strong> ${remarks}</p>
           </div>
           
-          <p style="color: #374151; margin-bottom: 15px;">Please login to the portal to view the details.</p>
+          <p style="color: #374151; margin-bottom: 15px;">Please login to the portal to view the details and proceed accordingly.</p>
           
           <div style="margin: 30px 0;">
             <a href="${process.env.FRONTEND_URL}/events" style="background-color: ${status === 'APPROVED' ? '#059669' : '#dc2626'}; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">View Event</a>
@@ -150,24 +150,24 @@ export const emailTemplates = {
           <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
             Best regards,<br>
             Yugam Finance Team<br>
-            Kumaraguru Institutions
+            Kumaraguru College of Technology
           </p>
         </div>
       </div>
     `,
   }),
 
-  expenseAdded: (eventName: string, itemName: string, amount: number, addedBy: string) => ({
-    subject: `New Expense Added: ${eventName}`,
+  expenseAdded: (eventTitle: string, itemName: string, amount: number, addedBy: string) => ({
+    subject: `New Expense Added: ${eventTitle}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8fafc;">
         <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
           <h2 style="color: #7c3aed; margin-bottom: 20px;">New Expense Added</h2>
           <p style="color: #374151; margin-bottom: 15px;">Dear Event Coordinator,</p>
-          <p style="color: #374151; margin-bottom: 15px;">A new expense has been added to your event:</p>
+          <p style="color: #374151; margin-bottom: 15px;">A new expense has been added to your event/workshop:</p>
           
           <div style="background-color: #f3f4f6; padding: 20px; border-radius: 6px; margin: 20px 0;">
-            <p style="margin: 5px 0; color: #374151;"><strong>Event Name:</strong> ${eventName}</p>
+            <p style="margin: 5px 0; color: #374151;"><strong>Event/Workshop:</strong> ${eventTitle}</p>
             <p style="margin: 5px 0; color: #374151;"><strong>Item:</strong> ${itemName}</p>
             <p style="margin: 5px 0; color: #374151;"><strong>Amount:</strong> ₹${amount.toLocaleString()}</p>
             <p style="margin: 5px 0; color: #374151;"><strong>Added by:</strong> ${addedBy}</p>
@@ -182,7 +182,7 @@ export const emailTemplates = {
           <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
             Best regards,<br>
             Yugam Finance Team<br>
-            Kumaraguru Institutions
+            Kumaraguru College of Technology
           </p>
         </div>
       </div>

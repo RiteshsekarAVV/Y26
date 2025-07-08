@@ -38,7 +38,7 @@ router.post('/event/:eventId', authenticate, authorize([UserRole.EVENT_TEAM_LEAD
   body('budgets').isArray(),
   body('budgets.*.categoryId').isUUID(),
   body('budgets.*.amount').isFloat({ min: 0 }),
-  body('budgets.*.sponsorContribution').optional().isFloat({ min: 0 }),
+  body('budgets.*.sponsorAmount').optional().isFloat({ min: 0 }),
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -54,6 +54,9 @@ router.post('/event/:eventId', authenticate, authorize([UserRole.EVENT_TEAM_LEAD
       where: { id: eventId },
       include: {
         creator: {
+          select: { id: true, name: true, email: true }
+        },
+        coordinator: {
           select: { id: true, name: true, email: true }
         }
       }
@@ -74,14 +77,14 @@ router.post('/event/:eventId', authenticate, authorize([UserRole.EVENT_TEAM_LEAD
         },
         update: {
           amount: budget.amount,
-          sponsorContribution: budget.sponsorContribution || 0,
+          sponsorAmount: budget.sponsorAmount || 0,
           remarks: budget.remarks
         },
         create: {
           eventId: eventId,
           categoryId: budget.categoryId,
           amount: budget.amount,
-          sponsorContribution: budget.sponsorContribution || 0,
+          sponsorAmount: budget.sponsorAmount || 0,
           remarks: budget.remarks
         },
         include: {
@@ -100,7 +103,7 @@ router.post('/event/:eventId', authenticate, authorize([UserRole.EVENT_TEAM_LEAD
           select: { email: true }
         });
 
-        const emailContent = emailTemplates.budgetSubmitted(event.name, event.creator.name);
+        const emailContent = emailTemplates.budgetSubmitted(event.title, event.creator.name);
         
         for (const user of financeTeamUsers) {
           await sendEmail({
@@ -124,6 +127,7 @@ router.post('/event/:eventId', authenticate, authorize([UserRole.EVENT_TEAM_LEAD
 router.post('/event/:eventId/approve', authenticate, authorize([UserRole.FINANCE_TEAM, UserRole.ADMIN]), [
   body('status').isIn(['APPROVED', 'REJECTED']),
   body('remarks').notEmpty().trim(),
+  body('budgetAdjustments').optional().isArray(),
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -132,7 +136,7 @@ router.post('/event/:eventId/approve', authenticate, authorize([UserRole.FINANCE
     }
 
     const { eventId } = req.params;
-    const { status, remarks } = req.body;
+    const { status, remarks, budgetAdjustments } = req.body;
 
     const event = await prisma.event.findUnique({
       where: { id: eventId },
@@ -148,6 +152,25 @@ router.post('/event/:eventId/approve', authenticate, authorize([UserRole.FINANCE
 
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
+    }
+
+    // Apply budget adjustments if provided
+    if (budgetAdjustments && budgetAdjustments.length > 0) {
+      const adjustmentPromises = budgetAdjustments.map((adjustment: any) =>
+        prisma.budget.update({
+          where: {
+            eventId_categoryId: {
+              eventId: eventId,
+              categoryId: adjustment.categoryId
+            }
+          },
+          data: {
+            approvedAmount: adjustment.approvedAmount,
+            sponsorAmount: adjustment.sponsorAmount || 0
+          }
+        })
+      );
+      await Promise.all(adjustmentPromises);
     }
 
     // Create budget approval record
@@ -173,7 +196,7 @@ router.post('/event/:eventId/approve', authenticate, authorize([UserRole.FINANCE
 
     // Send email to event creator and coordinator
     try {
-      const emailContent = emailTemplates.budgetApproved(event.name, status, remarks);
+      const emailContent = emailTemplates.budgetApproved(event.title, status, remarks);
       
       const emailRecipients = [event.creator.email];
       if (event.coordinator) {

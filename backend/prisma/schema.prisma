@@ -19,7 +19,7 @@ model User {
 
   // Relations
   createdEvents     Event[]     @relation("EventCreator")
-  assignedEvents    Event[]     @relation("EventCoordinator")
+  coordinatedEvents Event[]     @relation("EventCoordinator")
   expenses          Expense[]
   activityLogs      ActivityLog[]
   budgetApprovals   BudgetApproval[]
@@ -29,11 +29,11 @@ model User {
 
 model Event {
   id              String      @id @default(uuid())
-  name            String
-  description     String?
+  title           String
   type            EventType
   status          EventStatus @default(PENDING)
-  expectedParticipants Int?
+  coordinatorEmail String?
+  description     String?
   venue           String?
   dateTime        DateTime?
   createdAt       DateTime    @default(now())
@@ -72,7 +72,7 @@ model BudgetCategory {
 model Budget {
   id              String   @id @default(uuid())
   amount          Float
-  sponsorContribution Float @default(0)
+  sponsorAmount   Float    @default(0)
   approvedAmount  Float?
   remarks         String?
   createdAt       DateTime @default(now())
@@ -173,11 +173,8 @@ enum UserRole {
 }
 
 enum EventType {
-  CULTURAL
-  TECHNICAL
+  EVENT
   WORKSHOP
-  COMPETITION
-  SEMINAR
 }
 
 enum EventStatus {

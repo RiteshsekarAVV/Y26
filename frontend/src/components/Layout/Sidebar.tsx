@@ -27,11 +27,11 @@ const Sidebar = () => {
       return [
         ...baseItems,
         { icon: Users, label: 'Users', path: '/users' },
-        { icon: Calendar, label: 'Events', path: '/events' },
+        { icon: Calendar, label: 'Events/Workshops', path: '/events' },
         { icon: DollarSign, label: 'Budgets', path: '/budgets' },
         { icon: Receipt, label: 'Expenses', path: '/expenses' },
-        { icon: Package, label: 'Products', path: '/products' },
-        { icon: Settings, label: 'Categories', path: '/categories' },
+        { icon: Package, label: 'Product Catalog', path: '/products' },
+        { icon: Settings, label: 'Budget Categories', path: '/categories' },
         { icon: FileText, label: 'Reports', path: '/reports' },
         { icon: Shield, label: 'Admin Logs', path: '/admin/logs' },
       ];
@@ -40,11 +40,11 @@ const Sidebar = () => {
     if (user?.role === 'FINANCE_TEAM') {
       return [
         ...baseItems,
-        { icon: Calendar, label: 'Events', path: '/events' },
-        { icon: DollarSign, label: 'Budgets', path: '/budgets' },
+        { icon: Calendar, label: 'Events/Workshops', path: '/events' },
+        { icon: DollarSign, label: 'Budget Review', path: '/budgets' },
         { icon: Receipt, label: 'Expenses', path: '/expenses' },
-        { icon: Package, label: 'Products', path: '/products' },
-        { icon: Settings, label: 'Categories', path: '/categories' },
+        { icon: Package, label: 'Product Catalog', path: '/products' },
+        { icon: Settings, label: 'Budget Categories', path: '/categories' },
         { icon: FileText, label: 'Reports', path: '/reports' },
       ];
     }
@@ -52,26 +52,26 @@ const Sidebar = () => {
     if (user?.role === 'EVENT_TEAM_LEAD') {
       return [
         ...baseItems,
-        { icon: Calendar, label: 'My Events', path: '/events' },
-        { icon: DollarSign, label: 'Budgets', path: '/budgets' },
-        { icon: Receipt, label: 'Expenses', path: '/expenses' },
+        { icon: Calendar, label: 'My Events/Workshops', path: '/events' },
+        { icon: DollarSign, label: 'Budget Planning', path: '/budgets' },
+        { icon: Receipt, label: 'Expense Tracking', path: '/expenses' },
       ];
     }
 
     if (user?.role === 'FACILITIES_TEAM') {
       return [
         ...baseItems,
-        { icon: Calendar, label: 'Events', path: '/events' },
-        { icon: Receipt, label: 'Expenses', path: '/expenses' },
-        { icon: Package, label: 'Products', path: '/products' },
+        { icon: Calendar, label: 'Approved Events', path: '/events' },
+        { icon: Receipt, label: 'Add Expenses', path: '/expenses' },
+        { icon: Package, label: 'Product Catalog', path: '/products' },
       ];
     }
 
     if (user?.role === 'EVENT_COORDINATOR') {
       return [
         ...baseItems,
-        { icon: Calendar, label: 'My Events', path: '/events' },
-        { icon: BarChart3, label: 'Reports', path: '/reports' },
+        { icon: Calendar, label: 'My Events/Workshops', path: '/events' },
+        { icon: BarChart3, label: 'Expense Summary', path: '/reports' },
       ];
     }
 
@@ -119,7 +119,7 @@ const Sidebar = () => {
       <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50">
         <div className="text-center">
           <p className="text-xs text-gray-500">Yugam 2025</p>
-          <p className="text-xs text-gray-400">Kumaraguru Institutions</p>
+          <p className="text-xs text-gray-400">Kumaraguru College of Technology</p>
         </div>
       </div>
     </div>

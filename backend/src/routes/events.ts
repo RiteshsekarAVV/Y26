@@ -119,13 +119,12 @@ router.get('/:id', authenticate, async (req, res) => {
 
 // Create event
 router.post('/', authenticate, authorize([UserRole.EVENT_TEAM_LEAD, UserRole.ADMIN]), [
-  body('name').notEmpty().trim(),
+  body('title').notEmpty().trim(),
+  body('type').isIn(['EVENT', 'WORKSHOP']),
+  body('coordinatorEmail').optional().isEmail(),
   body('description').optional().trim(),
-  body('type').isIn(['CULTURAL', 'TECHNICAL', 'WORKSHOP', 'COMPETITION', 'SEMINAR']),
-  body('expectedParticipants').optional().isInt({ min: 1 }),
   body('venue').optional().trim(),
   body('dateTime').optional().isISO8601(),
-  body('coordinatorId').optional().isUUID(),
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -133,10 +132,30 @@ router.post('/', authenticate, authorize([UserRole.EVENT_TEAM_LEAD, UserRole.ADM
       return res.status(400).json({ error: 'Invalid input', details: errors.array() });
     }
 
+    const { title, type, coordinatorEmail, description, venue, dateTime } = req.body;
+
+    // Find coordinator by email if provided
+    let coordinatorId = null;
+    if (coordinatorEmail) {
+      const coordinator = await prisma.user.findUnique({
+        where: { email: coordinatorEmail, role: UserRole.EVENT_COORDINATOR, isActive: true }
+      });
+      
+      if (!coordinator) {
+        return res.status(400).json({ error: 'Coordinator not found with the provided email' });
+      }
+      coordinatorId = coordinator.id;
+    }
+
     const eventData = {
-      ...req.body,
+      title,
+      type,
+      coordinatorEmail,
+      description,
+      venue,
+      dateTime: dateTime ? new Date(dateTime) : null,
       creatorId: req.user!.userId,
-      dateTime: req.body.dateTime ? new Date(req.body.dateTime) : null
+      coordinatorId
     };
 
     const event = await prisma.event.create({
@@ -155,7 +174,7 @@ router.post('/', authenticate, authorize([UserRole.EVENT_TEAM_LEAD, UserRole.ADM
     if (event.coordinator) {
       try {
         const emailContent = emailTemplates.eventCreated(
-          event.name,
+          event.title,
           event.creator.name,
           event.coordinator.name
         );
@@ -177,13 +196,12 @@ router.post('/', authenticate, authorize([UserRole.EVENT_TEAM_LEAD, UserRole.ADM
 
 // Update event
 router.put('/:id', authenticate, [
-  body('name').optional().notEmpty().trim(),
+  body('title').optional().notEmpty().trim(),
+  body('type').optional().isIn(['EVENT', 'WORKSHOP']),
+  body('coordinatorEmail').optional().isEmail(),
   body('description').optional().trim(),
-  body('type').optional().isIn(['CULTURAL', 'TECHNICAL', 'WORKSHOP', 'COMPETITION', 'SEMINAR']),
-  body('expectedParticipants').optional().isInt({ min: 1 }),
   body('venue').optional().trim(),
   body('dateTime').optional().isISO8601(),
-  body('coordinatorId').optional().isUUID(),
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -196,7 +214,7 @@ router.put('/:id', authenticate, [
 
     const existingEvent = await prisma.event.findUnique({
       where: { id },
-      select: { creatorId: true }
+      select: { creatorId: true, status: true }
     });
 
     if (!existingEvent) {
@@ -208,7 +226,27 @@ router.put('/:id', authenticate, [
       return res.status(403).json({ error: 'Access denied' });
     }
 
+    // Event team leads can only edit if event is pending or rejected
+    if (role === UserRole.EVENT_TEAM_LEAD && 
+        existingEvent.status !== EventStatus.PENDING && 
+        existingEvent.status !== EventStatus.REJECTED) {
+      return res.status(400).json({ error: 'Cannot edit approved or completed events' });
+    }
+
     const updateData = { ...req.body };
+    
+    // Handle coordinator email update
+    if (req.body.coordinatorEmail) {
+      const coordinator = await prisma.user.findUnique({
+        where: { email: req.body.coordinatorEmail, role: UserRole.EVENT_COORDINATOR, isActive: true }
+      });
+      
+      if (!coordinator) {
+        return res.status(400).json({ error: 'Coordinator not found with the provided email' });
+      }
+      updateData.coordinatorId = coordinator.id;
+    }
+
     if (req.body.dateTime) {
       updateData.dateTime = new Date(req.body.dateTime);
     }
