@@ -4,7 +4,7 @@ export interface Event {
   id: string;
   name: string;
   description?: string;
-  type: 'CULTURAL' | 'TECHNICAL' | 'WORKSHOP' | 'COMPETITION' | 'SEMINAR';
+  type: 'CULTURAL' | 'TECHNICAL' | 'WORKSHOP' | 'COMPETITION' | 'SEMINAR' | 'EVENT';
   status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED';
   expectedParticipants?: number;
   venue?: string;

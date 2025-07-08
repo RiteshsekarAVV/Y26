@@ -24,34 +24,34 @@ const AdminProducts = React.lazy(() => import('@/pages/admin/Products'));
 const AdminReports = React.lazy(() => import('@/pages/admin/Reports'));
 
 // Finance Pages
-const FinanceEvents = React.lazy(() => import('@/pages/finance/Events'));
-const FinanceBudgets = React.lazy(() => import('@/pages/finance/Budgets'));
-const FinanceExpenses = React.lazy(() => import('@/pages/finance/Expenses'));
-const FinanceProducts = React.lazy(() => import('@/pages/finance/Products'));
-const FinanceCategories = React.lazy(() => import('@/pages/finance/Categories'));
-const FinanceReports = React.lazy(() => import('@/pages/finance/Reports'));
+// const FinanceEvents = React.lazy(() => import('@/pages/finance/Events'));
+// const FinanceBudgets = React.lazy(() => import('@/pages/finance/Budgets'));
+// const FinanceExpenses = React.lazy(() => import('@/pages/finance/Expenses'));
+// const FinanceProducts = React.lazy(() => import('@/pages/finance/Products'));
+// const FinanceCategories = React.lazy(() => import('@/pages/finance/Categories'));
+// const FinanceReports = React.lazy(() => import('@/pages/finance/Reports'));
 
 // Event Lead Pages
-const EventLeadEvents = React.lazy(() => import('@/pages/event-leads/Events'));
-const EventLeadBudgets = React.lazy(() => import('@/pages/event-leads/Budgets'));
-const EventLeadExpenses = React.lazy(() => import('@/pages/event-leads/Expenses'));
+// const EventLeadEvents = React.lazy(() => import('@/pages/event-leads/Events'));
+// const EventLeadBudgets = React.lazy(() => import('@/pages/event-leads/Budgets'));
+// const EventLeadExpenses = React.lazy(() => import('@/pages/event-leads/Expenses'));
 const CreateEvent = React.lazy(() => import('@/pages/event-leads/CreateEvent'));
 
 // Workshop Lead Pages
-const WorkshopLeadWorkshops = React.lazy(() => import('@/pages/workshop-leads/Workshops'));
-const WorkshopLeadBudgets = React.lazy(() => import('@/pages/workshop-leads/Budgets'));
-const WorkshopLeadExpenses = React.lazy(() => import('@/pages/workshop-leads/Expenses'));
+// const WorkshopLeadWorkshops = React.lazy(() => import('@/pages/workshop-leads/Workshops'));
+// const WorkshopLeadBudgets = React.lazy(() => import('@/pages/workshop-leads/Budgets'));
+// const WorkshopLeadExpenses = React.lazy(() => import('@/pages/workshop-leads/Expenses'));
 const CreateWorkshop = React.lazy(() => import('@/pages/workshop-leads/CreateWorkshop'));
 
 // Facilities Pages
-const FacilitiesEvents = React.lazy(() => import('@/pages/facilities/Events'));
-const FacilitiesExpenses = React.lazy(() => import('@/pages/facilities/Expenses'));
-const FacilitiesProducts = React.lazy(() => import('@/pages/facilities/Products'));
+// const FacilitiesEvents = React.lazy(() => import('@/pages/facilities/Events'));
+// const FacilitiesExpenses = React.lazy(() => import('@/pages/facilities/Expenses'));
+// const FacilitiesProducts = React.lazy(() => import('@/pages/facilities/Products'));
 const FacilitiesVenues = React.lazy(() => import('@/pages/facilities/Venues'));
 
 // Coordinator Pages
-const CoordinatorEvents = React.lazy(() => import('@/pages/coordinator/Events'));
-const CoordinatorReports = React.lazy(() => import('@/pages/coordinator/Reports'));
+// const CoordinatorEvents = React.lazy(() => import('@/pages/coordinator/Events'));
+// const CoordinatorReports = React.lazy(() => import('@/pages/coordinator/Reports'));
 
 const AppContent = () => {
   const { user, loading } = useAuth();
@@ -213,7 +213,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <FinanceEvents />
+                  {/* <FinanceEvents /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -224,7 +224,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <FinanceBudgets />
+                  {/* <FinanceBudgets /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -235,7 +235,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <FinanceExpenses />
+                  {/* <FinanceExpenses /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -246,7 +246,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <FinanceProducts />
+                  {/* <FinanceProducts /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -257,7 +257,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <FinanceCategories />
+                  {/* <FinanceCategories /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -268,7 +268,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <FinanceReports />
+                  {/* <FinanceReports /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -280,7 +280,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['EVENT_TEAM_LEAD', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <EventLeadEvents />
+                  {/* <EventLeadEvents /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -302,7 +302,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['EVENT_TEAM_LEAD', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <EventLeadBudgets />
+                  {/* <EventLeadBudgets /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -313,7 +313,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['EVENT_TEAM_LEAD', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <EventLeadExpenses />
+                  {/* <EventLeadExpenses /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -325,7 +325,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['WORKSHOP_TEAM_LEAD', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <WorkshopLeadWorkshops />
+                  {/* <WorkshopLeadWorkshops /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -347,7 +347,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['WORKSHOP_TEAM_LEAD', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <WorkshopLeadBudgets />
+                  {/* <WorkshopLeadBudgets /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -358,7 +358,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['WORKSHOP_TEAM_LEAD', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <WorkshopLeadExpenses />
+                  {/* <WorkshopLeadExpenses /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -370,7 +370,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FACILITIES_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <FacilitiesEvents />
+                  {/* <FacilitiesEvents /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -381,7 +381,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FACILITIES_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <FacilitiesExpenses />
+                  {/* <FacilitiesExpenses /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -392,7 +392,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FACILITIES_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <FacilitiesProducts />
+                  {/* <FacilitiesProducts /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -415,7 +415,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['EVENT_COORDINATOR', 'WORKSHOP_COORDINATOR', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <CoordinatorEvents />
+                  {/* <CoordinatorEvents /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -426,7 +426,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['EVENT_COORDINATOR', 'WORKSHOP_COORDINATOR', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <CoordinatorReports />
+                  {/* <CoordinatorReports /> */}
                 </React.Suspense>
               </ProtectedRoute>
             }
