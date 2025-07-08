@@ -61,9 +61,9 @@ const Sidebar = () => {
     if (user?.role === 'EVENT_TEAM_LEAD') {
       return [
         ...baseItems,
-        { icon: Calendar, label: 'My Events', path: '/team-leads/events' },
-        { icon: DollarSign, label: 'Budget Planning', path: '/team-leads/budgets' },
-        { icon: Receipt, label: 'Expense Tracking', path: '/team-leads/expenses' },
+        { icon: Calendar, label: 'My Events', path: '/event-leads/events' },
+        { icon: DollarSign, label: 'Budget Planning', path: '/event-leads/budgets' },
+        { icon: Receipt, label: 'Expense Tracking', path: '/event-leads/expenses' },
         { icon: Bell, label: 'Notifications', path: '/notifications' },
         { icon: User, label: 'Profile', path: '/profile' },
       ];
@@ -72,9 +72,9 @@ const Sidebar = () => {
     if (user?.role === 'WORKSHOP_TEAM_LEAD') {
       return [
         ...baseItems,
-        { icon: Calendar, label: 'My Workshops', path: '/team-leads/workshops' },
-        { icon: DollarSign, label: 'Budget Planning', path: '/team-leads/budgets' },
-        { icon: Receipt, label: 'Expense Tracking', path: '/team-leads/expenses' },
+        { icon: Calendar, label: 'My Workshops', path: '/workshop-leads/workshops' },
+        { icon: DollarSign, label: 'Budget Planning', path: '/workshop-leads/budgets' },
+        { icon: Receipt, label: 'Expense Tracking', path: '/workshop-leads/expenses' },
         { icon: Bell, label: 'Notifications', path: '/notifications' },
         { icon: User, label: 'Profile', path: '/profile' },
       ];

@@ -10,34 +10,55 @@ import Unauthorized from '@/pages/Unauthorized';
 import Profile from '@/pages/Profile';
 import Notifications from '@/pages/Notifications';
 
-// Lazy load pages for better performance
-const Events = React.lazy(() => import('@/pages/events/Events'));
-const EventDetail = React.lazy(() => import('@/pages/events/EventDetail'));
-const CreateEvent = React.lazy(() => import('@/pages/events/CreateEvent'));
-
-const Users = React.lazy(() => import('@/pages/admin/Users'));
+// Admin Pages
+const AdminUsers = React.lazy(() => import('@/pages/admin/Users'));
 const AdminLogs = React.lazy(() => import('@/pages/admin/AdminLogs'));
 const AdminEvents = React.lazy(() => import('@/pages/admin/Events'));
 const AdminWorkshops = React.lazy(() => import('@/pages/admin/Workshops'));
 const AdminNotifications = React.lazy(() => import('@/pages/admin/Notifications'));
 const AdminVenues = React.lazy(() => import('@/pages/admin/Venues'));
+const AdminBudgets = React.lazy(() => import('@/pages/admin/Budgets'));
+const AdminExpenses = React.lazy(() => import('@/pages/admin/Expenses'));
+const AdminCategories = React.lazy(() => import('@/pages/admin/Categories'));
+const AdminProducts = React.lazy(() => import('@/pages/admin/Products'));
+const AdminReports = React.lazy(() => import('@/pages/admin/Reports'));
 
-const Budgets = React.lazy(() => import('@/pages/budgets/Budgets'));
-const BudgetDetail = React.lazy(() => import('@/pages/budgets/BudgetDetail'));
+// Finance Pages
+const FinanceEvents = React.lazy(() => import('@/pages/finance/Events'));
+const FinanceBudgets = React.lazy(() => import('@/pages/finance/Budgets'));
+const FinanceExpenses = React.lazy(() => import('@/pages/finance/Expenses'));
+const FinanceProducts = React.lazy(() => import('@/pages/finance/Products'));
+const FinanceCategories = React.lazy(() => import('@/pages/finance/Categories'));
+const FinanceReports = React.lazy(() => import('@/pages/finance/Reports'));
 
-const Expenses = React.lazy(() => import('@/pages/expenses/Expenses'));
-const ExpenseDetail = React.lazy(() => import('@/pages/expenses/ExpenseDetail'));
+// Event Lead Pages
+const EventLeadEvents = React.lazy(() => import('@/pages/event-leads/Events'));
+const EventLeadBudgets = React.lazy(() => import('@/pages/event-leads/Budgets'));
+const EventLeadExpenses = React.lazy(() => import('@/pages/event-leads/Expenses'));
+const CreateEvent = React.lazy(() => import('@/pages/event-leads/CreateEvent'));
 
-const Categories = React.lazy(() => import('@/pages/categories/Categories'));
-const Products = React.lazy(() => import('@/pages/products/Products'));
-const Reports = React.lazy(() => import('@/pages/reports/Reports'));
+// Workshop Lead Pages
+const WorkshopLeadWorkshops = React.lazy(() => import('@/pages/workshop-leads/Workshops'));
+const WorkshopLeadBudgets = React.lazy(() => import('@/pages/workshop-leads/Budgets'));
+const WorkshopLeadExpenses = React.lazy(() => import('@/pages/workshop-leads/Expenses'));
+const CreateWorkshop = React.lazy(() => import('@/pages/workshop-leads/CreateWorkshop'));
+
+// Facilities Pages
+const FacilitiesEvents = React.lazy(() => import('@/pages/facilities/Events'));
+const FacilitiesExpenses = React.lazy(() => import('@/pages/facilities/Expenses'));
+const FacilitiesProducts = React.lazy(() => import('@/pages/facilities/Products'));
+const FacilitiesVenues = React.lazy(() => import('@/pages/facilities/Venues'));
+
+// Coordinator Pages
+const CoordinatorEvents = React.lazy(() => import('@/pages/coordinator/Events'));
+const CoordinatorReports = React.lazy(() => import('@/pages/coordinator/Reports'));
 
 const AppContent = () => {
   const { user, loading } = useAuth();
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
+      <div className="min-h-screen flex items-center justify-center bg-blue-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading Yugam Finance Portal...</p>
@@ -70,7 +91,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Users />
+                  <AdminUsers />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -103,7 +124,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Budgets />
+                  <AdminBudgets />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -114,7 +135,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Expenses />
+                  <AdminExpenses />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -125,7 +146,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Products />
+                  <AdminProducts />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -136,7 +157,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Categories />
+                  <AdminCategories />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -158,7 +179,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Reports />
+                  <AdminReports />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -192,7 +213,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Events />
+                  <FinanceEvents />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -203,7 +224,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Budgets />
+                  <FinanceBudgets />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -214,7 +235,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Expenses />
+                  <FinanceExpenses />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -225,7 +246,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Products />
+                  <FinanceProducts />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -236,7 +257,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Categories />
+                  <FinanceCategories />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -247,52 +268,97 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FINANCE_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Reports />
+                  <FinanceReports />
                 </React.Suspense>
               </ProtectedRoute>
             }
           />
 
-          {/* Team Lead Routes */}
+          {/* Event Team Lead Routes */}
           <Route
-            path="team-leads/events"
+            path="event-leads/events"
             element={
               <ProtectedRoute allowedRoles={['EVENT_TEAM_LEAD', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Events />
+                  <EventLeadEvents />
                 </React.Suspense>
               </ProtectedRoute>
             }
           />
           
           <Route
-            path="team-leads/workshops"
+            path="event-leads/events/create"
+            element={
+              <ProtectedRoute allowedRoles={['EVENT_TEAM_LEAD', 'ADMIN']}>
+                <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
+                  <CreateEvent />
+                </React.Suspense>
+              </ProtectedRoute>
+            }
+          />
+          
+          <Route
+            path="event-leads/budgets"
+            element={
+              <ProtectedRoute allowedRoles={['EVENT_TEAM_LEAD', 'ADMIN']}>
+                <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
+                  <EventLeadBudgets />
+                </React.Suspense>
+              </ProtectedRoute>
+            }
+          />
+          
+          <Route
+            path="event-leads/expenses"
+            element={
+              <ProtectedRoute allowedRoles={['EVENT_TEAM_LEAD', 'ADMIN']}>
+                <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
+                  <EventLeadExpenses />
+                </React.Suspense>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Workshop Team Lead Routes */}
+          <Route
+            path="workshop-leads/workshops"
             element={
               <ProtectedRoute allowedRoles={['WORKSHOP_TEAM_LEAD', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Events />
+                  <WorkshopLeadWorkshops />
                 </React.Suspense>
               </ProtectedRoute>
             }
           />
           
           <Route
-            path="team-leads/budgets"
+            path="workshop-leads/workshops/create"
             element={
-              <ProtectedRoute allowedRoles={['EVENT_TEAM_LEAD', 'WORKSHOP_TEAM_LEAD', 'ADMIN']}>
+              <ProtectedRoute allowedRoles={['WORKSHOP_TEAM_LEAD', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Budgets />
+                  <CreateWorkshop />
                 </React.Suspense>
               </ProtectedRoute>
             }
           />
           
           <Route
-            path="team-leads/expenses"
+            path="workshop-leads/budgets"
             element={
-              <ProtectedRoute allowedRoles={['EVENT_TEAM_LEAD', 'WORKSHOP_TEAM_LEAD', 'ADMIN']}>
+              <ProtectedRoute allowedRoles={['WORKSHOP_TEAM_LEAD', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Expenses />
+                  <WorkshopLeadBudgets />
+                </React.Suspense>
+              </ProtectedRoute>
+            }
+          />
+          
+          <Route
+            path="workshop-leads/expenses"
+            element={
+              <ProtectedRoute allowedRoles={['WORKSHOP_TEAM_LEAD', 'ADMIN']}>
+                <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
+                  <WorkshopLeadExpenses />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -304,7 +370,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FACILITIES_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Events />
+                  <FacilitiesEvents />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -315,7 +381,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FACILITIES_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Expenses />
+                  <FacilitiesExpenses />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -326,7 +392,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FACILITIES_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Products />
+                  <FacilitiesProducts />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -337,7 +403,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['FACILITIES_TEAM', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <AdminVenues />
+                  <FacilitiesVenues />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -349,7 +415,7 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['EVENT_COORDINATOR', 'WORKSHOP_COORDINATOR', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Events />
+                  <CoordinatorEvents />
                 </React.Suspense>
               </ProtectedRoute>
             }
@@ -360,106 +426,9 @@ const AppContent = () => {
             element={
               <ProtectedRoute allowedRoles={['EVENT_COORDINATOR', 'WORKSHOP_COORDINATOR', 'ADMIN']}>
                 <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Reports />
+                  <CoordinatorReports />
                 </React.Suspense>
               </ProtectedRoute>
-            }
-          />
-          
-          {/* General Routes */}
-          <Route
-            path="events"
-            element={
-              <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                <Events />
-              </React.Suspense>
-            }
-          />
-          
-          <Route
-            path="events/create"
-            element={
-              <ProtectedRoute allowedRoles={['EVENT_TEAM_LEAD', 'ADMIN']}>
-                <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <CreateEvent />
-                </React.Suspense>
-              </ProtectedRoute>
-            }
-          />
-          
-          <Route
-            path="events/:id"
-            element={
-              <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                <EventDetail />
-              </React.Suspense>
-            }
-          />
-          
-          <Route
-            path="budgets"
-            element={
-              <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                <Budgets />
-              </React.Suspense>
-            }
-          />
-          
-          <Route
-            path="budgets/:id"
-            element={
-              <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                <BudgetDetail />
-              </React.Suspense>
-            }
-          />
-          
-          <Route
-            path="expenses"
-            element={
-              <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                <Expenses />
-              </React.Suspense>
-            }
-          />
-          
-          <Route
-            path="expenses/:id"
-            element={
-              <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                <ExpenseDetail />
-              </React.Suspense>
-            }
-          />
-          
-          <Route
-            path="categories"
-            element={
-              <ProtectedRoute allowedRoles={['ADMIN', 'FINANCE_TEAM']}>
-                <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Categories />
-                </React.Suspense>
-              </ProtectedRoute>
-            }
-          />
-          
-          <Route
-            path="products"
-            element={
-              <ProtectedRoute allowedRoles={['ADMIN', 'FINANCE_TEAM', 'FACILITIES_TEAM']}>
-                <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                  <Products />
-                </React.Suspense>
-              </ProtectedRoute>
-            }
-          />
-          
-          <Route
-            path="reports"
-            element={
-              <React.Suspense fallback={<div className="flex justify-center p-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div></div>}>
-                <Reports />
-              </React.Suspense>
             }
           />
         </Route>

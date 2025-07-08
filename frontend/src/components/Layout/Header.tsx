@@ -35,6 +35,8 @@ const Header = () => {
         return 'Administrator';
       case 'EVENT_TEAM_LEAD':
         return 'Event Team Lead';
+      case 'WORKSHOP_TEAM_LEAD':
+        return 'Workshop Team Lead';
       case 'FINANCE_TEAM':
         return 'Finance Team';
       case 'FACILITIES_TEAM':
@@ -51,17 +53,19 @@ const Header = () => {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'ADMIN':
-        return 'bg-purple-100 text-purple-800';
+        return 'bg-blue-100 text-blue-800';
       case 'EVENT_TEAM_LEAD':
         return 'bg-blue-100 text-blue-800';
+      case 'WORKSHOP_TEAM_LEAD':
+        return 'bg-blue-100 text-blue-800';
       case 'FINANCE_TEAM':
-        return 'bg-green-100 text-green-800';
+        return 'bg-blue-100 text-blue-800';
       case 'FACILITIES_TEAM':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-blue-100 text-blue-800';
       case 'EVENT_COORDINATOR':
-        return 'bg-indigo-100 text-indigo-800';
+        return 'bg-blue-100 text-blue-800';
       case 'WORKSHOP_COORDINATOR':
-        return 'bg-pink-100 text-pink-800';
+        return 'bg-blue-100 text-blue-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
@@ -110,7 +114,7 @@ const Header = () => {
               >
                 <Bell className="w-5 h-5" />
                 {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center">
                     {unreadCount > 9 ? '9+' : unreadCount}
                   </span>
                 )}
@@ -189,7 +193,7 @@ const Header = () => {
                   </a>
                   
                   <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                    <Settings className="w-4 h-4 mr-2" />
+                    <Settings className="w-4 w-4 mr-2" />
                     Settings
                   </button>
                   
