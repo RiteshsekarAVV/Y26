@@ -43,3 +43,4 @@ export * from './categories';
 export * from './products';
 export * from './admin';
 export * from './reports';
+export * from './notifications';

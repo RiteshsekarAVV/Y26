@@ -18,6 +18,7 @@ import categoryRoutes from './routes/categories';
 import productRoutes from './routes/products';
 import adminRoutes from './routes/admin';
 import reportRoutes from './routes/reports';
+import notificationRoutes from './routes/notifications';
 
 dotenv.config();
 
@@ -56,6 +57,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

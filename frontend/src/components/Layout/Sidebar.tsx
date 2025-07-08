@@ -11,7 +11,9 @@ import {
   FileText,
   BarChart3,
   Shield,
-  Building
+  Building,
+  User,
+  Bell
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
@@ -34,6 +36,8 @@ const Sidebar = () => {
         { icon: Settings, label: 'Budget Categories', path: '/categories' },
         { icon: FileText, label: 'Reports', path: '/reports' },
         { icon: Shield, label: 'Admin Logs', path: '/admin/logs' },
+        { icon: Bell, label: 'Notifications', path: '/notifications' },
+        { icon: User, label: 'Profile', path: '/profile' },
       ];
     }
 
@@ -46,6 +50,8 @@ const Sidebar = () => {
         { icon: Package, label: 'Product Catalog', path: '/products' },
         { icon: Settings, label: 'Budget Categories', path: '/categories' },
         { icon: FileText, label: 'Reports', path: '/reports' },
+        { icon: Bell, label: 'Notifications', path: '/notifications' },
+        { icon: User, label: 'Profile', path: '/profile' },
       ];
     }
 
@@ -55,6 +61,8 @@ const Sidebar = () => {
         { icon: Calendar, label: 'My Events/Workshops', path: '/events' },
         { icon: DollarSign, label: 'Budget Planning', path: '/budgets' },
         { icon: Receipt, label: 'Expense Tracking', path: '/expenses' },
+        { icon: Bell, label: 'Notifications', path: '/notifications' },
+        { icon: User, label: 'Profile', path: '/profile' },
       ];
     }
 
@@ -64,14 +72,18 @@ const Sidebar = () => {
         { icon: Calendar, label: 'Approved Events', path: '/events' },
         { icon: Receipt, label: 'Add Expenses', path: '/expenses' },
         { icon: Package, label: 'Product Catalog', path: '/products' },
+        { icon: Bell, label: 'Notifications', path: '/notifications' },
+        { icon: User, label: 'Profile', path: '/profile' },
       ];
     }
 
-    if (user?.role === 'EVENT_COORDINATOR') {
+    if (user?.role === 'EVENT_COORDINATOR' || user?.role === 'WORKSHOP_COORDINATOR') {
       return [
         ...baseItems,
         { icon: Calendar, label: 'My Events/Workshops', path: '/events' },
         { icon: BarChart3, label: 'Expense Summary', path: '/reports' },
+        { icon: Bell, label: 'Notifications', path: '/notifications' },
+        { icon: User, label: 'Profile', path: '/profile' },
       ];
     }
 
@@ -84,7 +96,7 @@ const Sidebar = () => {
     <div className="w-64 bg-white shadow-lg min-h-screen border-r border-gray-200">
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
             <Building className="h-6 w-6 text-white" />
           </div>
           <div>
@@ -103,7 +115,7 @@ const Sidebar = () => {
               className={({ isActive }) =>
                 `flex items-center px-4 py-3 mb-1 text-sm font-medium rounded-lg transition-all duration-200 ${
                   isActive
-                    ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-500'
+                    ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border-r-2 border-blue-500'
                     : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
                 }`
               }

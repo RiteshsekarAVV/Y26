@@ -23,6 +23,7 @@ model User {
   expenses          Expense[]
   activityLogs      ActivityLog[]
   budgetApprovals   BudgetApproval[]
+  notifications     Notification[]
 
   @@map("users")
 }
@@ -146,6 +147,22 @@ model BudgetApproval {
   @@map("budget_approvals")
 }
 
+model Notification {
+  id          String            @id @default(uuid())
+  title       String
+  message     String
+  type        NotificationType
+  isRead      Boolean           @default(false)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  // Relations
+  userId      String
+  user        User              @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
+}
+
 model ActivityLog {
   id          String   @id @default(uuid())
   action      String
@@ -170,6 +187,7 @@ enum UserRole {
   FINANCE_TEAM
   FACILITIES_TEAM
   EVENT_COORDINATOR
+  WORKSHOP_COORDINATOR
 }
 
 enum EventType {
@@ -187,4 +205,11 @@ enum EventStatus {
 enum ApprovalStatus {
   APPROVED
   REJECTED
+}
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
 }
