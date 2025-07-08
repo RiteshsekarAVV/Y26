@@ -1,6 +1,7 @@
 import express from 'express';
-import { PrismaClient, NotificationType } from '@prisma/client';
-import { authenticate } from '../middleware/auth';
+import { body, validationResult } from 'express-validator';
+import { PrismaClient, NotificationType, UserRole } from '@prisma/client';
+import { authenticate, authorize } from '../middleware/auth';
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -42,6 +43,54 @@ router.get('/', authenticate, async (req, res) => {
   }
 });
 
+// Create notification (Admin only)
+router.post('/', authenticate, authorize([UserRole.ADMIN]), [
+  body('title').notEmpty().trim(),
+  body('message').notEmpty().trim(),
+  body('type').isIn(['INFO', 'SUCCESS', 'WARNING', 'ERROR']),
+  body('targetRole').optional().isIn(Object.values(UserRole)),
+  body('sendToAll').optional().isBoolean(),
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: 'Invalid input', details: errors.array() });
+    }
+
+    const { title, message, type, targetRole, sendToAll } = req.body;
+
+    let users;
+    if (sendToAll) {
+      users = await prisma.user.findMany({
+        where: { isActive: true },
+        select: { id: true }
+      });
+    } else if (targetRole) {
+      users = await prisma.user.findMany({
+        where: { role: targetRole, isActive: true },
+        select: { id: true }
+      });
+    } else {
+      return res.status(400).json({ error: 'Either sendToAll or targetRole must be specified' });
+    }
+
+    const notifications = users.map(user => ({
+      userId: user.id,
+      title,
+      message,
+      type: type as NotificationType
+    }));
+
+    await prisma.notification.createMany({
+      data: notifications
+    });
+
+    res.json({ message: 'Notifications sent successfully', count: notifications.length });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create notifications' });
+  }
+});
+
 // Mark notification as read
 router.patch('/:id/read', authenticate, async (req, res) => {
   try {
@@ -78,7 +127,7 @@ router.patch('/mark-all-read', authenticate, async (req, res) => {
   }
 });
 
-// Create notification (internal use)
+// Create notification helper function
 export const createNotification = async (
   userId: string,
   title: string,

@@ -41,6 +41,21 @@ const AdminWorkshops = () => {
     );
   };
 
+  const downloadTemplate = () => {
+    const csvContent = "data:text/csv;charset=utf-8," + 
+      "Title,Type,Description,CoordinatorEmail,Venue,DateTime\n" +
+      "Sample Workshop,WORKSHOP,Sample Description,coordinator@yugam.in,Lab 1,2024-12-25T10:00:00\n" +
+      "AI Workshop,WORKSHOP,Artificial Intelligence workshop,ai@yugam.in,Computer Lab,2024-12-26T09:00:00";
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "workshops_template.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-96">
@@ -60,9 +75,12 @@ const AdminWorkshops = () => {
         </div>
         
         <div className="flex items-center space-x-3">
-          <button className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+          <button
+            onClick={downloadTemplate}
+            className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          >
             <Download className="h-4 w-4 mr-2" />
-            Bulk Upload
+            Download Template
           </button>
           <Link
             to="/admin/workshops/create"

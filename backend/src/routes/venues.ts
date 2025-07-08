@@ -129,8 +129,7 @@ router.get('/events-for-assignment', authenticate, authorize([UserRole.ADMIN, Us
   try {
     const events = await prisma.event.findMany({
       where: {
-        status: 'APPROVED',
-        venueId: null
+        status: 'APPROVED'
       },
       include: {
         creator: {
@@ -138,7 +137,8 @@ router.get('/events-for-assignment', authenticate, authorize([UserRole.ADMIN, Us
         },
         coordinator: {
           select: { id: true, name: true, email: true }
-        }
+        },
+        venue: true
       },
       orderBy: { dateTime: 'asc' }
     });

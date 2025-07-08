@@ -10,10 +10,10 @@ async function main() {
   const adminPassword = await bcrypt.hash('IamAdmin123!@#', 12);
   
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@yugam.com' },
+    where: { email: 'admin@yugam.in' },
     update: {},
     create: {
-      email: 'admin@yugam.com',
+      email: 'admin@yugam.in',
       name: 'Admin',
       password: adminPassword,
       role: UserRole.ADMIN,
@@ -42,6 +42,26 @@ async function main() {
   }
 
   console.log('Default budget categories created');
+
+  // Create sample venues
+  const venues = [
+    { name: 'Main Auditorium', description: 'Large auditorium for major events', capacity: 500, location: 'Main Block', facilities: 'AC, Projector, Sound System, Stage' },
+    { name: 'Conference Hall A', description: 'Medium sized conference hall', capacity: 100, location: 'Admin Block', facilities: 'AC, Projector, WiFi' },
+    { name: 'Conference Hall B', description: 'Small conference room', capacity: 50, location: 'Admin Block', facilities: 'AC, Projector, WiFi' },
+    { name: 'Open Ground', description: 'Outdoor venue for large gatherings', capacity: 1000, location: 'Campus Ground', facilities: 'Stage Setup Available' },
+    { name: 'Computer Lab 1', description: 'Technical workshop venue', capacity: 60, location: 'IT Block', facilities: 'Computers, AC, Projector' },
+    { name: 'Seminar Hall', description: 'Academic presentations and seminars', capacity: 150, location: 'Academic Block', facilities: 'AC, Audio System, Projector' }
+  ];
+
+  for (const venue of venues) {
+    await prisma.venue.upsert({
+      where: { name: venue.name },
+      update: {},
+      create: venue
+    });
+  }
+
+  console.log('Sample venues created');
 
   // Create sample products for the catalog
   const products = [

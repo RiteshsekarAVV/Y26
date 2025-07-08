@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Bell, Send } from 'lucide-react';
+import { Plus, Bell, Send, Download } from 'lucide-react';
 import { notificationsAPI } from '@/api';
 import { useApi } from '@/hooks/useApi';
 import { useToast } from '@/components/ui/Toast';
@@ -53,6 +53,22 @@ const AdminNotifications = () => {
     { value: 'WORKSHOP_COORDINATOR', label: 'Workshop Coordinators' }
   ];
 
+  const downloadTemplate = () => {
+    const csvContent = "data:text/csv;charset=utf-8," + 
+      "Title,Message,Type,TargetRole\n" +
+      "Sample Title,Sample Message,INFO,EVENT_TEAM_LEAD\n" +
+      "Budget Reminder,Please submit your budget,WARNING,EVENT_TEAM_LEAD\n" +
+      "System Maintenance,System will be down for maintenance,ERROR,ALL";
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "notification_template.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -63,13 +79,22 @@ const AdminNotifications = () => {
           </p>
         </div>
         
-        <button
-          onClick={() => setShowModal(true)}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Create Notification
-        </button>
+        <div className="flex items-center space-x-3">
+          <button
+            onClick={downloadTemplate}
+            className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Download Template
+          </button>
+          <button
+            onClick={() => setShowModal(true)}
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Create Notification
+          </button>
+        </div>
       </div>
 
       <div className="bg-white shadow rounded-lg p-6">
