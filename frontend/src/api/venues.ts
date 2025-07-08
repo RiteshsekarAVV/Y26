@@ -10,6 +10,12 @@ export interface Venue {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
+  events?: Array<{
+    id: string;
+    title: string;
+    dateTime: string | null;
+    status: string;
+  }>;
 }
 
 export interface CreateVenueRequest {
