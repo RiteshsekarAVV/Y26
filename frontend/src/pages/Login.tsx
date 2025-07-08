@@ -29,10 +29,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <div className="mx-auto h-16 w-16 flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl shadow-lg">
+          <div className="mx-auto h-16 w-16 flex items-center justify-center bg-blue-600 rounded-xl shadow-lg">
             <Building className="h-8 w-8 text-white" />
           </div>
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
@@ -42,7 +42,7 @@ const Login = () => {
             Sign in to your account to continue
           </p>
           <div className="mt-2 text-center">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
               Yugam Finance Portal
             </span>
           </div>
@@ -104,7 +104,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 {loading ? (
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
@@ -118,10 +118,10 @@ const Login = () => {
             </div>
 
             <div className="text-center">
-              <div className="text-sm text-gray-600 bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg border border-blue-100">
+              <div className="text-sm text-gray-600 bg-blue-50 p-4 rounded-lg border border-blue-100">
                 <p className="font-medium mb-2 text-gray-800">Default admin credentials:</p>
                 <div className="space-y-1">
-                  <p><span className="font-medium">Email:</span> admin@yugam.com</p>
+                  <p><span className="font-medium">Email:</span> admin@yugam.in</p>
                   <p><span className="font-medium">Password:</span> IamAdmin123!@#</p>
                 </div>
               </div>

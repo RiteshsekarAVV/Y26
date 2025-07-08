@@ -5,25 +5,32 @@ A comprehensive role-based financial management web application for the Yugam fe
 ## 🚀 Features
 
 ### 🔐 Role-Based Access Control
-- **Admin**: Full system access, user management, audit logs
+- **Admin**: Full system access, user management, venue management, audit logs, notification creation
 - **Event Team Lead**: Create events, manage budgets, track expenses
+- **Workshop Team Lead**: Create workshops, manage budgets, track expenses
 - **Finance Team**: Review and approve budgets, manage categories
-- **Facilities Team**: Add expenses to approved events, manage product catalog
+- **Facilities Team**: Add expenses to approved events, manage venues, product catalog
 - **Event/Workshop Coordinators**: View expense summaries, download reports
 
 ### 💰 Financial Management
-- **Budget Planning**: Structured budget creation with predefined categories
+- **Budget Planning**: Structured budget creation with admin-managed categories
 - **Approval Workflow**: Finance team review and approval process
 - **Expense Tracking**: Real-time expense recording and budget monitoring
 - **Sponsor Management**: Track sponsor contributions and adjustments
 
+### 🏢 Venue Management
+- **Venue CRUD**: Admin and Facilities team can manage venues
+- **Venue Assignment**: Facilities team assigns venues to approved events
+- **Filtering**: Advanced filters for venue assignment based on date, type, status
+
 ### 📊 Reporting & Analytics
 - **Real-time Dashboards**: Role-specific dashboard views
 - **Financial Reports**: Comprehensive event-wise and category-wise reports
-- **Export Options**: PDF and CSV export capabilities
+- **Export Options**: PDF and CSV export capabilities with bulk upload templates
 - **Budget vs Expense Analysis**: Visual tracking of budget utilization
 
 ### 🔔 Notifications & Communication
+- **Admin Notifications**: Admins can create and send notifications to specific roles or all users
 - **Real-time Notifications**: In-app notification system
 - **Email Alerts**: Automated email notifications for key events
 - **Activity Logging**: Comprehensive audit trail of all user actions
@@ -40,7 +47,7 @@ A comprehensive role-based financial management web application for the Yugam fe
 ### Frontend
 - **Framework**: React 18 with TypeScript
 - **Build Tool**: Vite
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS (Blue color scheme as per design requirements)
 - **UI Components**: Custom component library
 - **State Management**: React Context API
 - **Routing**: React Router v6
@@ -78,7 +85,7 @@ npm run db:generate
 # Push database schema
 npm run db:push
 
-# Seed initial data (creates admin user)
+# Seed initial data (creates admin user and default data)
 npm run db:seed
 
 # Start development server
@@ -132,7 +139,7 @@ VITE_API_URL=http://localhost:5000/api
 ## 👥 Default User Accounts
 
 ### Admin Account
-- **Email**: admin@yugam.com
+- **Email**: admin@yugam.in
 - **Password**: IamAdmin123!@#
 - **Role**: Administrator
 
@@ -141,17 +148,24 @@ VITE_API_URL=http://localhost:5000/api
 ### 🔑 Admin
 - Full system access and control
 - User management (CRUD operations)
+- Venue management (CRUD operations)
 - Budget category management
 - Product catalog management
 - System audit logs access
-- All financial data visibility
+- Create and send notifications to users
+- Separate pages for event and workshop management
 
 ### 👨‍💼 Event Team Lead
-- Create and manage events/workshops
-- Submit budget proposals
+- Create and manage events
+- Submit budget proposals (categories managed by admin)
 - Track event expenses
 - View approval status and feedback
-- Receive email notifications
+
+### 👩‍🏫 Workshop Team Lead
+- Create and manage workshops
+- Submit budget proposals (categories managed by admin)
+- Track workshop expenses
+- View approval status and feedback
 
 ### 💰 Finance Team
 - Review and approve/reject budgets
@@ -162,22 +176,24 @@ VITE_API_URL=http://localhost:5000/api
 
 ### 🏗️ Facilities Team
 - Add expenses to approved events
+- Manage venues (CRUD operations)
+- Assign venues to approved events/workshops
 - Manage product catalog
-- View approved event budgets
 - Real-time expense tracking
 
 ### 🎓 Event/Workshop Coordinators
-- View assigned event summaries
+- View assigned event/workshop summaries
 - Download financial reports
 - Monitor budget utilization
 - Receive expense notifications
 
 ## 🔄 Workflow Process
 
-### 1. Event Creation
-1. Event Team Lead creates event with budget proposal
-2. System sends notification to Finance Team
-3. Event enters "Pending" status
+### 1. Event/Workshop Creation
+1. Team Lead creates event/workshop with budget proposal
+2. Budget categories are pre-defined by admin
+3. System sends notification to Finance Team
+4. Event enters "Pending" status
 
 ### 2. Budget Review
 1. Finance Team reviews budget proposal
@@ -185,63 +201,55 @@ VITE_API_URL=http://localhost:5000/api
 3. Approve or reject with mandatory remarks
 4. Email notifications sent to coordinators
 
-### 3. Expense Management
+### 3. Venue Assignment
+1. Facilities Team views approved events/workshops
+2. Assigns venues using filtering system
+3. Real-time venue availability tracking
+
+### 4. Expense Management
 1. Facilities Team adds expenses to approved events
 2. Real-time budget tracking and alerts
 3. Product catalog integration for quick entry
 4. Automatic notifications to coordinators
 
-### 4. Reporting
+### 5. Reporting
 1. Real-time dashboard updates
 2. Comprehensive financial reports
-3. Export capabilities for external use
+3. Export capabilities with bulk upload options
 4. Audit trail maintenance
 
-## 📊 API Endpoints
+## 🎨 Design Guidelines
 
-### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/change-password` - Change password
-- `GET /api/auth/me` - Get current user
+- **Color Scheme**: Blue-based design as per provided mockups
+- **No Gradients**: Clean, flat design approach
+- **Consistent UI**: Blue buttons, blue accents, professional appearance
+- **Responsive Design**: Mobile-friendly interface
+- **Accessibility**: High contrast ratios and readable fonts
 
-### Events
-- `GET /api/events` - List events (role-filtered)
-- `POST /api/events` - Create event
-- `GET /api/events/:id` - Get event details
-- `PUT /api/events/:id` - Update event
+## 📊 Key Features
 
-### Budgets
-- `GET /api/budgets/event/:eventId` - Get event budgets
-- `POST /api/budgets/event/:eventId` - Create/update budgets
-- `POST /api/budgets/event/:eventId/approve` - Approve/reject budget
+### Venue Management
+- CRUD operations for venues
+- Capacity and facility tracking
+- Assignment to events/workshops
+- Advanced filtering for assignment
 
-### Expenses
-- `GET /api/expenses/event/:eventId` - Get event expenses
-- `POST /api/expenses` - Create expense
-- `GET /api/expenses/event/:eventId/summary` - Get expense summary
+### Notification System
+- Admin can create notifications
+- Target specific roles or all users
+- Real-time in-app notifications
+- Email integration
 
-### Notifications
-- `GET /api/notifications` - Get user notifications
-- `PATCH /api/notifications/:id/read` - Mark as read
-- `PATCH /api/notifications/mark-all-read` - Mark all as read
+### Bulk Operations
+- Bulk upload capabilities with template downloads
+- User management bulk operations
+- Data export in multiple formats
 
-## 🔒 Security Features
-
+### Enhanced Security
 - JWT-based authentication
 - Role-based access control
-- Password hashing with bcrypt
-- Rate limiting on API endpoints
-- Input validation and sanitization
-- CORS protection
-- Helmet.js security headers
-
-## 📝 Logging & Audit
-
-- Comprehensive activity logging
-- User action tracking
-- API request/response logging
-- Error logging with Winston
-- Admin-accessible audit trails
+- Activity logging and audit trails
+- Password complexity requirements
 
 ## 🚀 Deployment
 
@@ -257,13 +265,6 @@ cd frontend
 npm run build
 npm run preview
 ```
-
-### Environment Variables
-Ensure all production environment variables are properly configured, especially:
-- Database connection strings
-- JWT secrets
-- Email server credentials
-- CORS origins
 
 ## 🤝 Contributing
 
@@ -286,9 +287,19 @@ For support and questions:
 
 ## 🔄 Version History
 
+### v2.0.0
+- Added Workshop Team Lead and Workshop Coordinator roles
+- Implemented venue management system
+- Added admin notification creation
+- Separated event and workshop management
+- Removed gradients, implemented blue color scheme
+- Added bulk upload capabilities
+- Enhanced role-based page organization
+- Improved security and audit logging
+
 ### v1.0.0
 - Initial release
-- Complete role-based system
+- Basic role-based system
 - Budget management workflow
 - Expense tracking
 - Notification system

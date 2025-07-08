@@ -13,7 +13,8 @@ import {
   Shield,
   Building,
   User,
-  Bell
+  Bell,
+  MapPin
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
@@ -28,15 +29,17 @@ const Sidebar = () => {
     if (user?.role === 'ADMIN') {
       return [
         ...baseItems,
-        { icon: Users, label: 'Users', path: '/users' },
-        { icon: Calendar, label: 'Events/Workshops', path: '/events' },
-        { icon: DollarSign, label: 'Budgets', path: '/budgets' },
-        { icon: Receipt, label: 'Expenses', path: '/expenses' },
-        { icon: Package, label: 'Product Catalog', path: '/products' },
-        { icon: Settings, label: 'Budget Categories', path: '/categories' },
-        { icon: FileText, label: 'Reports', path: '/reports' },
+        { icon: Users, label: 'Users', path: '/admin/users' },
+        { icon: Calendar, label: 'Events', path: '/admin/events' },
+        { icon: Calendar, label: 'Workshops', path: '/admin/workshops' },
+        { icon: DollarSign, label: 'Budgets', path: '/admin/budgets' },
+        { icon: Receipt, label: 'Expenses', path: '/admin/expenses' },
+        { icon: MapPin, label: 'Venues', path: '/admin/venues' },
+        { icon: Package, label: 'Product Catalog', path: '/admin/products' },
+        { icon: Settings, label: 'Budget Categories', path: '/admin/categories' },
+        { icon: FileText, label: 'Reports', path: '/admin/reports' },
         { icon: Shield, label: 'Admin Logs', path: '/admin/logs' },
-        { icon: Bell, label: 'Notifications', path: '/notifications' },
+        { icon: Bell, label: 'Notifications', path: '/admin/notifications' },
         { icon: User, label: 'Profile', path: '/profile' },
       ];
     }
@@ -44,12 +47,12 @@ const Sidebar = () => {
     if (user?.role === 'FINANCE_TEAM') {
       return [
         ...baseItems,
-        { icon: Calendar, label: 'Events/Workshops', path: '/events' },
-        { icon: DollarSign, label: 'Budget Review', path: '/budgets' },
-        { icon: Receipt, label: 'Expenses', path: '/expenses' },
-        { icon: Package, label: 'Product Catalog', path: '/products' },
-        { icon: Settings, label: 'Budget Categories', path: '/categories' },
-        { icon: FileText, label: 'Reports', path: '/reports' },
+        { icon: Calendar, label: 'Events/Workshops', path: '/finance/events' },
+        { icon: DollarSign, label: 'Budget Review', path: '/finance/budgets' },
+        { icon: Receipt, label: 'Expenses', path: '/finance/expenses' },
+        { icon: Package, label: 'Product Catalog', path: '/finance/products' },
+        { icon: Settings, label: 'Budget Categories', path: '/finance/categories' },
+        { icon: FileText, label: 'Reports', path: '/finance/reports' },
         { icon: Bell, label: 'Notifications', path: '/notifications' },
         { icon: User, label: 'Profile', path: '/profile' },
       ];
@@ -58,9 +61,20 @@ const Sidebar = () => {
     if (user?.role === 'EVENT_TEAM_LEAD') {
       return [
         ...baseItems,
-        { icon: Calendar, label: 'My Events/Workshops', path: '/events' },
-        { icon: DollarSign, label: 'Budget Planning', path: '/budgets' },
-        { icon: Receipt, label: 'Expense Tracking', path: '/expenses' },
+        { icon: Calendar, label: 'My Events', path: '/event-lead/events' },
+        { icon: DollarSign, label: 'Budget Planning', path: '/event-lead/budgets' },
+        { icon: Receipt, label: 'Expense Tracking', path: '/event-lead/expenses' },
+        { icon: Bell, label: 'Notifications', path: '/notifications' },
+        { icon: User, label: 'Profile', path: '/profile' },
+      ];
+    }
+
+    if (user?.role === 'WORKSHOP_TEAM_LEAD') {
+      return [
+        ...baseItems,
+        { icon: Calendar, label: 'My Workshops', path: '/workshop-lead/workshops' },
+        { icon: DollarSign, label: 'Budget Planning', path: '/workshop-lead/budgets' },
+        { icon: Receipt, label: 'Expense Tracking', path: '/workshop-lead/expenses' },
         { icon: Bell, label: 'Notifications', path: '/notifications' },
         { icon: User, label: 'Profile', path: '/profile' },
       ];
@@ -69,9 +83,10 @@ const Sidebar = () => {
     if (user?.role === 'FACILITIES_TEAM') {
       return [
         ...baseItems,
-        { icon: Calendar, label: 'Approved Events', path: '/events' },
-        { icon: Receipt, label: 'Add Expenses', path: '/expenses' },
-        { icon: Package, label: 'Product Catalog', path: '/products' },
+        { icon: Calendar, label: 'Approved Events', path: '/facilities/events' },
+        { icon: MapPin, label: 'Venue Management', path: '/facilities/venues' },
+        { icon: Receipt, label: 'Add Expenses', path: '/facilities/expenses' },
+        { icon: Package, label: 'Product Catalog', path: '/facilities/products' },
         { icon: Bell, label: 'Notifications', path: '/notifications' },
         { icon: User, label: 'Profile', path: '/profile' },
       ];
@@ -80,8 +95,8 @@ const Sidebar = () => {
     if (user?.role === 'EVENT_COORDINATOR' || user?.role === 'WORKSHOP_COORDINATOR') {
       return [
         ...baseItems,
-        { icon: Calendar, label: 'My Events/Workshops', path: '/events' },
-        { icon: BarChart3, label: 'Expense Summary', path: '/reports' },
+        { icon: Calendar, label: 'My Events/Workshops', path: '/coordinator/events' },
+        { icon: BarChart3, label: 'Expense Summary', path: '/coordinator/reports' },
         { icon: Bell, label: 'Notifications', path: '/notifications' },
         { icon: User, label: 'Profile', path: '/profile' },
       ];
@@ -96,7 +111,7 @@ const Sidebar = () => {
     <div className="w-64 bg-white shadow-lg min-h-screen border-r border-gray-200">
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
             <Building className="h-6 w-6 text-white" />
           </div>
           <div>
@@ -115,7 +130,7 @@ const Sidebar = () => {
               className={({ isActive }) =>
                 `flex items-center px-4 py-3 mb-1 text-sm font-medium rounded-lg transition-all duration-200 ${
                   isActive
-                    ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border-r-2 border-blue-500'
+                    ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-500'
                     : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
                 }`
               }
